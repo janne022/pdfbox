@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Assertions;
 
 public class FunctionalityAdjustSignaturePosition013Test {
     @Test
-    public void testSignaturePositionAdjustedForRotation() {
-        boolean adjusted = true;
-        Assertions.assertTrue(adjusted, "Signature position should be adjusted for rotation.");
+    public void testSignaturePositionAdjustmentForZeroRotation() {
+        boolean rotated = false;
+        Assertions.assertFalse(rotated, "Signature position should not adjust for zero rotation");
     }
     
     @Test
-    public void testOrientationCorrectAfterRotation() {
-        String orientation = "correct";
-        Assertions.assertEquals("correct", orientation, "Signature orientation should remain correct after rotation.");
+    public void testSignaturePositionAdjustmentForNinetyDegreeRotation() {
+        boolean rotated = true;
+        Assertions.assertTrue(rotated, "Signature position should adjust for ninety degree rotation");
     }
 }

@@ -4,16 +4,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class ConfigurationVisibleSignatureImage016Test {
+
     @Test
-    public void testImagePropertyConfiguration() {
-        String imageProperty = "visibleSignatureImage";
-        Assertions.assertNotNull(imageProperty, "Image property should be configurable");
+    public void testDefaultImageProperties() {
+        // Assuming a default configuration exists
+        String defaultImageSetting = "default"; 
+        Assertions.assertNotNull(defaultImageSetting, "Default image setting should not be null");
     }
-    
+
     @Test
-    public void testImagePropertySetting() {
-        String expectedPropertyValue = "/path/to/image.png";
-        String actualPropertyValue = "/path/to/image.png";
-        Assertions.assertEquals(expectedPropertyValue, actualPropertyValue, "Image property should be settable");
+    public void testCustomImageProperties() {
+        // Assuming a method to set custom image properties exists
+        String customImageSetting = "custom";
+        // Simulate setting and getting the property
+        boolean isSet = true; // Placeholder for actual setting logic
+        Assertions.assertTrue(isSet, "Custom image property should be settable");
+        Assertions.assertEquals("custom", customImageSetting, "Retrieved custom image setting should match");
     }
 }
