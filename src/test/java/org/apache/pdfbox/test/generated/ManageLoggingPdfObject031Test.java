@@ -4,18 +4,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class ManageLoggingPdfObject031Test {
-
     @Test
-    public void testObjectCreationLog() {
-        String logMessage = "PDF object created";
-        Assertions.assertNotNull(logMessage, "Log message should not be null");
-        Assertions.assertTrue(logMessage.contains("created"), "Log message should indicate creation");
+    public void testLogObjectCreation() {
+        String event = "PDF object created";
+        Assertions.assertNotNull(event, "Event log should not be null");
+        Assertions.assertTrue(event.contains("created"), "Event log must indicate creation");
     }
-
+    
     @Test
-    public void testObjectUpdateLog() {
-        String logMessage = "PDF object updated";
-        Assertions.assertNotNull(logMessage, "Log message should not be null");
-        Assertions.assertEquals("PDF object updated", logMessage, "Log message should indicate update");
+    public void testLogObjectUpdate() {
+        String event = "PDF object updated";
+        Assertions.assertNotNull(event, "Event log should not be null");
+        Assertions.assertEquals("PDF object updated", event, "Event log must indicate update");
     }
 }

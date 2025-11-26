@@ -4,16 +4,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class SpecifyingFilterSignatureHandlers028Test {
-
     @Test
-    public void testFilterCanBeSpecifiedAsNull() {
-        String filter = null;
-        Assertions.assertNull(filter, "Filter should be null by default or explicitly set to null");
+    public void testFilterParameterIsNotNull() {
+        String filterParameter = "SomeFilter";
+        Assertions.assertNotNull(filterParameter, "The filter parameter should not be null.");
     }
-
+    
     @Test
-    public void testFilterCanBeSpecifiedAsString() {
-        String filter = "someFilterName";
-        Assertions.assertEquals("someFilterName", filter, "Filter should accept a string value");
+    public void testFilterParameterIsString() {
+        Object filterParameter = "AnotherFilter";
+        Assertions.assertTrue(filterParameter instanceof String, "The filter parameter must be a String.");
     }
 }

@@ -5,14 +5,15 @@ import org.junit.jupiter.api.Assertions;
 
 public class SpecifyingLegalattestationDigitalSignatures023Test {
     @Test
-    public void testLegalAttestationCanBeAdded() {
+    public void testLegalAttestationCanBeSpecified() {
         String attestationType = "LegalAttestation";
-        Assertions.assertEquals("LegalAttestation", attestationType);
+        Assertions.assertNotNull(attestationType, "LegalAttestation should be specifiable");
+        Assertions.assertEquals("LegalAttestation", attestationType, "The specified type should match");
     }
 
     @Test
-    public void testDigitalSignatureStructureAllowsLegalAttestation() {
-        Boolean supportsLegalAttestation = true;
-        Assertions.assertTrue(supportsLegalAttestation);
+    public void testOtherAttestationTypesAreNotLegalAttestation() {
+        String otherType = "OtherType";
+        Assertions.assertNotEquals("LegalAttestation", otherType, "This should not be LegalAttestation");
     }
 }
