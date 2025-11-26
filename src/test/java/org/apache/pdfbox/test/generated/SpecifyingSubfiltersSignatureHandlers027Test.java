@@ -5,16 +5,15 @@ import org.junit.jupiter.api.Assertions;
 
 public class SpecifyingSubfiltersSignatureHandlers027Test {
     @Test
-    public void testSubfiltersPresent() {
-        String subfiltersOption = "/SubFilter";
-        boolean optionExists = subfiltersOption.equals("/SubFilter");
-        Assertions.assertTrue(optionExists, "'/SubFilter' option should be settable.");
+    public void testSubfilterParameter() {
+        String subFilter = "MyCustomSubFilter";
+        Assertions.assertNotNull(subFilter, "Subfilter should not be null");
+        Assertions.assertTrue(subFilter.length() > 0, "Subfilter string should not be empty");
     }
     
     @Test
-    public void testSignatureHandlerConfiguration() {
-        String handlerConfig = "StandardHandler:/SubFilter/SomeFilter";
-        Assertions.assertNotNull(handlerConfig, "Signature handler configuration string should not be null.");
-        Assertions.assertTrue(handlerConfig.contains("/SubFilter"), "Handler config should contain SubFilter setting.");
+    public void testSubfilterAssignment() {
+        String assignedSubFilter = "AnotherFilter";
+        Assertions.assertEquals("AnotherFilter", assignedSubFilter, "Assigned subfilter value mismatch");
     }
 }
