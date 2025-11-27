@@ -24,27 +24,47 @@ import java.util.List;
 
 import org.apache.fontbox.ttf.model.GsubData;
 import org.apache.fontbox.ttf.model.ScriptFeature;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * 
- * GSUB worker to test "aalt", code is copied from the latin worker except for the features.
- * 
- * @author Palash Ray
- * @author Tilman Hausherr
+ * DFLT (Default) script-specific implementation of GSUB system.
  *
+ * <p>According to the OpenType specification, a Script table with the script tag 'DFLT' (default)
+ * is used in fonts to define features that are not script-specific. Applications should use the
+ * DFLT script table when no script table exists for the specific script of the text being
+ * processed, or when text lacks a defined script (containing only symbols or punctuation).</p>
+ *
+ * <p>This implementation applies common, script-neutral typographic features that work across
+ * writing systems. The feature order follows standard OpenType recommendations for universal
+ * glyph substitutions.</p>
+ *
+ * <p>Reference:
+ * <a href="https://learn.microsoft.com/en-us/typography/opentype/spec/chapter2#scriptlist-table">
+ * OpenType ScriptList Table Specification</a></p>
  */
-public class GsubWorkerForAalt implements GsubWorker
+public class GsubWorkerForDflt implements GsubWorker
 {
-    private static final Logger LOG = LogManager.getLogger(GsubWorkerForAalt.class);
+    private static final Logger LOG = LogManager.getLogger(GsubWorkerForDflt.class);
 
-    private static final List<String> FEATURES_IN_ORDER = Arrays.asList("aalt");
+    /**
+     * Script-neutral features in recommended processing order.
+     *
+     * <ul>
+     * <li>ccmp - Glyph Composition/Decomposition (must be first)</li>
+     * <li>liga - Standard Ligatures</li>
+     * <li>clig - Contextual Ligatures</li>
+     * <li>calt - Contextual Alternates</li>
+     * </ul>
+     *
+     * Note: This feature list focuses on common GSUB (substitution) features.
+     * GPOS features like 'kern', 'mark', 'mkmk' are handled separately.
+     */
+    private static final List<String> FEATURES_IN_ORDER = Arrays.asList("ccmp", "liga", "clig", "calt");
 
     private final GsubData gsubData;
 
-    GsubWorkerForAalt(GsubData gsubData)
+    GsubWorkerForDflt(GsubData gsubData)
     {
         this.gsubData = gsubData;
     }
@@ -78,11 +98,10 @@ public class GsubWorkerForAalt implements GsubWorker
     {
         if (scriptFeature.getAllGlyphIdsForSubstitution().isEmpty())
         {
-            LOG.debug("getAllGlyphIdsForSubstitution() for {} is empty",
-                        scriptFeature.getName());
+            LOG.debug("getAllGlyphIdsForSubstitution() for {} is empty", scriptFeature.getName());
             return originalGlyphs;
         }
-        
+
         GlyphArraySplitter glyphArraySplitter = new GlyphArraySplitterRegexImpl(
                 scriptFeature.getAllGlyphIdsForSubstitution());
 
@@ -103,7 +122,7 @@ public class GsubWorkerForAalt implements GsubWorker
             }
         }
 
-        LOG.debug("originalGlyphs: {}, gsubProcessedGlyphs: {}", originalGlyphs, gsubProcessedGlyphs);
+        LOG.debug("originalGlyphs: {} gsubProcessedGlyphs: {}", originalGlyphs, gsubProcessedGlyphs);
 
         return gsubProcessedGlyphs;
     }

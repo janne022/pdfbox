@@ -123,7 +123,7 @@ public class DomXmpParser
         }
         catch (SAXException | IOException e)
         {
-            throw new XmpParsingException(ErrorType.Undefined, "Failed to parse", e);
+            throw new XmpParsingException(ErrorType.Undefined, "Failed to parse: " + e.getMessage(), e);
         }
 
         XMPMetadata xmp = null;
@@ -193,6 +193,22 @@ public class DomXmpParser
             {
                 dataDescriptions.add(description);
             }
+        }
+
+        // PDFBOX-2378: keep rdf namespace declarations for later serialization
+        NamedNodeMap attributes = rdfRdf.getAttributes();
+        if (attributes != null)
+        {
+            Map<String, String> rdfAttributeMap = new HashMap<>();
+            for (int i = 0; i < attributes.getLength(); ++i)
+            {
+                Node item = attributes.item(i);
+                if (XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(item.getNamespaceURI()))
+                {
+                    rdfAttributeMap.put(item.getNodeName(), item.getNodeValue());
+                }
+            }
+            xmp.setRdfAttributeMap(rdfAttributeMap);
         }
         // find schema description
         PdfaExtensionHelper.populateSchemaMapping(xmp);
